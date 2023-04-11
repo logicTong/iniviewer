@@ -4,25 +4,20 @@ import com.intellij.icons.AllIcons
 import com.intellij.ide.util.TreeFileChooser
 import com.intellij.ide.util.TreeFileChooserFactory
 import com.intellij.notification.NotificationType
-import com.intellij.openapi.fileTypes.FileType
 import com.intellij.openapi.project.Project
 import com.intellij.openapi.ui.TextFieldWithBrowseButton
 import com.intellij.openapi.ui.VerticalFlowLayout
 import com.intellij.openapi.vfs.VfsUtil
-import com.intellij.openapi.vfs.VirtualFile
 import com.intellij.psi.PsiFile
 import com.intellij.psi.PsiManager
 import com.intellij.ui.components.JBList
 import com.intellij.ui.components.JBScrollPane
-import com.intellij.util.ui.JBEmptyBorder
 import com.intellij.util.ui.components.BorderLayoutPanel
 import com.tianhe.iniviewer.utils.Log
 import com.tianhe.iniviewer.data.PathList
 import com.tianhe.iniviewer.data.model.SectionDict
 import com.tianhe.iniviewer.inifile.IniDataLoader
 import com.tianhe.iniviewer.utils.NotificationUtils
-import kotlinx.serialization.modules.EmptySerializersModule
-import java.awt.BorderLayout
 import java.awt.Dimension
 import java.awt.FlowLayout
 import java.io.File
@@ -57,6 +52,7 @@ class PathManagePanel(val project: Project) : BorderLayoutPanel() {
     var listModel = DefaultListModel<String>()
     val list = JBList(listModel)
     val listPanel = JBScrollPane(list)
+    var refreshCallback: (() -> Unit)? = null
 
 
     init {
@@ -99,6 +95,7 @@ class PathManagePanel(val project: Project) : BorderLayoutPanel() {
                     SectionDict.addIniFile(it)
                     SectionDict.dump()
                     refreshList()
+                    refreshCallback?.let { it() }
                     NotificationUtils.showNotification(
                         project,
                         "read ini file finish \n${path}",
@@ -119,6 +116,7 @@ class PathManagePanel(val project: Project) : BorderLayoutPanel() {
                 PathList.removePath(it)
                 SectionDict.removeIniFile(it)
                 refreshList()
+                refreshCallback?.let { it() }
             }
         }
     }

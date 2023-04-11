@@ -1,11 +1,15 @@
 package com.tianhe.iniviewer.data.model
 
+import com.tianhe.iniviewer.inifile.SectionInfo
+
 /**
  * Created by tianhe on 2023/4/9
  */
-class Section(val name: String, values: Map<String, String>, private val iniFile: IniFile) {
+class Section(info: SectionInfo, private val iniFile: IniFile) {
 
     val properties = mutableMapOf<String, Value>()
+    val name: String
+    val lineNum: Int
 
     val iniFileName: String
         get() {
@@ -18,8 +22,10 @@ class Section(val name: String, values: Map<String, String>, private val iniFile
         }
 
     init {
-        values.forEach {
-            properties[it.key] = Value(it.value)
+        name = info.name
+        lineNum = info.lineNum
+        info.properties.forEach {
+            properties[it.key] = Value(it.value.value, it.value.lineNum)
         }
     }
 

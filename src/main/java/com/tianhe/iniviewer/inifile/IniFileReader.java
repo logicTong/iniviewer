@@ -4,6 +4,7 @@ package com.tianhe.iniviewer.inifile;
 import java.io.*;
 import java.nio.charset.Charset;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -19,7 +20,7 @@ public class IniFileReader {
      * properties2=xxx
      * }
      */
-    public static Map<String, HashMap<String, String>> readIniFile(String path) throws Exception {
+    public static List<SectionInfo> readIniFile(String path) throws Exception {
         BufferedReader bufferedReader = null;
         InputStreamReader inputStreamReader = null;
         InputStream inputStream = new FileInputStream(path);

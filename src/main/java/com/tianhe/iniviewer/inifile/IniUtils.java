@@ -26,13 +26,14 @@ public class IniUtils {
      * @param bufferedReader
      * @return
      */
-    public static Map<String, HashMap<String, String>> parseIni(BufferedReader bufferedReader) throws Exception {
+    public static List<SectionInfo> parseIni(BufferedReader bufferedReader) throws Exception {
         if (bufferedReader == null) {
             return null;
         }
 
-        Map<String, HashMap<String, String>> result = new HashMap<>();
-        HashMap<String, String> hashMap = null;
+        ArrayList<SectionInfo> result = new ArrayList<>(64);
+        SectionInfo info = null;
+        int lineNum = 0;
         while (true) {
             try {
                 String readLine = bufferedReader.readLine();
@@ -43,21 +44,22 @@ public class IniUtils {
                         if (trim.startsWith("[") && trim.endsWith("]")) {
                             String substr = trim.substring(1, trim.length() - 1);
                             if (substr.length() > 0) {
-                                hashMap = new HashMap<>();
-                                result.put(Strings.trimToEmpty(substr), hashMap);
+                                info = new SectionInfo(Strings.trimToEmpty(substr), lineNum);
+                                result.add(info);
                             }
                         } else if (trim.contains("=")) {
                             int indexOf = trim.indexOf("=");
-                            String sub1 = Strings.trim(trim.substring(0, indexOf));
-                            String sub2 = Strings.trim(trim.substring(indexOf + 1));
-                            if (trim.length() > 0 && hashMap != null) {
-                                hashMap.put(sub1, sub2);
+                            String k = Strings.trim(trim.substring(0, indexOf));
+                            String v = Strings.trim(trim.substring(indexOf + 1));
+                            if (trim.length() > 0 && info != null) {
+                                info.properties.put(k, new LineValue(v, lineNum));
                             }
                         }
                     }
                 } else {
                     break;
                 }
+                lineNum++;
             } catch (Exception e) {
                 e.printStackTrace();
                 try {

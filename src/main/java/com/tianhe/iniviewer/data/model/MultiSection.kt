@@ -23,19 +23,19 @@ class MultiSection(section: Section) {
 
     val sectionName: String
         get() {
-            return getSingleSection().name
+            return getSingleSection()?.name?:""
         }
 
-    fun getSingleSection(): Section {
-        return sections[0]
+    fun getSingleSection(): Section? {
+        return if (size > 0) sections[0] else null
     }
 
 
     fun removeSectionByPath(path: String) {
-        val tr=sections.iterator()
-        while (tr.hasNext()){
+        val tr = sections.iterator()
+        while (tr.hasNext()) {
             tr.next().let {
-                if(path.equals(it.intFilePath)){
+                if (path.equals(it.intFilePath)) {
                     tr.remove()
                 }
             }

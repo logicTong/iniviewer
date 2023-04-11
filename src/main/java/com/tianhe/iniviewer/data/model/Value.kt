@@ -5,7 +5,7 @@ import com.tianhe.iniviewer.logic.Config
 /**
  * Created by tianhe on 2023/4/9
  */
-class Value(val value: String) {
+class Value(val value: String, val lineNum: Int) {
 
     //值是否引用了多个section
     var isMultiReference: Boolean = false

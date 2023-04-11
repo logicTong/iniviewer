@@ -1,6 +1,5 @@
 package com.tianhe.iniviewer.data.model
 
-import com.intellij.openapi.editor.Editor
 import com.tianhe.iniviewer.ui.main.tree.node.KVTreeNode
 import com.tianhe.iniviewer.ui.main.tree.node.MultiSectionTreeNode
 import com.tianhe.iniviewer.ui.main.tree.node.SectionTreeNode
@@ -56,19 +55,23 @@ class SectionTree(private val rootName: String) {
             }
         } else {
             //不冲突，只有一个section
-            node.getSection().properties.forEach {
-                val nextNode = KVTreeNode(it.key, it.value)
-                node.add(nextNode)
-                queue.offer(nextNode)
+            node.section.let { section ->
+                section.properties.forEach {
+                    val nextNode = KVTreeNode(it.key, it.value, section)
+                    node.add(nextNode)
+                    queue.offer(nextNode)
+                }
             }
         }
     }
 
     private fun handleSectionTreeNode(node: SectionTreeNode, queue: Queue<TreeNode>) {
-        node.section.properties.forEach {
-            val nextNode = KVTreeNode(it.key, it.value)
-            node.add(nextNode)
-            queue.offer(nextNode)
+        node.section.let { section ->
+            section.properties.forEach {
+                val nextNode = KVTreeNode(it.key, it.value, section)
+                node.add(nextNode)
+                queue.offer(nextNode)
+            }
         }
     }
 

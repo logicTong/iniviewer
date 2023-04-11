@@ -65,7 +65,7 @@ class TreeNodeRender : DefaultTreeCellRenderer() {
         if (model is SectionTreeNode) {
             iniFileName.text = "${model.section.iniFileName}    "
         } else if (model is MultiSectionTreeNode) {
-            iniFileName.text = "${model.getSection().iniFileName}    "
+            iniFileName.text = "${model.section.iniFileName}    "
         } else {
             iniFileName.text = ""
         }
