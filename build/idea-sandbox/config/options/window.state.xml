@@ -1,0 +1,24 @@
+<application>
+  <component name="WindowManager">
+    <frame x="0" y="25" width="1735" height="1095" />
+    <layout>
+      <window_info content_ui="combo" id="Project" order="0" weight="0.25" />
+      <window_info anchor="bottom" id="Version Control" order="0" />
+      <window_info anchor="bottom" id="Find" order="1" />
+      <window_info anchor="bottom" id="Run" order="2" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
+      <window_info anchor="bottom" id="Inspection" order="4" weight="0.4" />
+    </layout>
+  </component>
+  <component name="WindowStateApplicationService">
+    <state x="867" y="490" width="798" height="600" key="WELCOME_SCREEN" timestamp="1681138600152">
+      <screen x="0" y="25" width="1735" height="1095" />
+    </state>
+    <state x="867" y="490" width="798" height="600" key="WELCOME_SCREEN/-382.-1415.2560.1415/0.25.1735.1095" timestamp="1681138600152" />
+    <state x="868" y="490" width="799" height="600" key="WELCOME_SCREEN/-382.-1415.2560.1415/0.25.1737.1095" timestamp="1681031915269" />
+    <state x="870" y="490" width="800" height="600" key="WELCOME_SCREEN/-382.-1415.2560.1415/0.25.1741.1095" timestamp="1680960292500" />
+    <state x="871" y="490" width="800" height="600" key="WELCOME_SCREEN/-382.-1415.2560.1415/0.25.1742.1095" timestamp="1680956178706" />
+    <state x="868" y="490" width="800" height="600" key="WELCOME_SCREEN/0.25.1737.1095" timestamp="1681122193270" />
+    <state x="869" y="490" width="800" height="600" key="WELCOME_SCREEN/0.25.1739.1095" timestamp="1681098093697" />
+  </component>
+</application>

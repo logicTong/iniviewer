@@ -1,0 +1,26 @@
+<idea-plugin>
+    <id>com.tianhe.iniviewer</id>
+    <name>ini viewer</name>
+    <vendor email="1299957228@qq.com">TianHeTong</vendor>
+
+    <description>
+        a tool to view ini file better.
+    </description>
+
+    <!-- please see https://plugins.jetbrains.com/docs/intellij/plugin-compatibility.html
+         on how to target different products -->
+    <depends>com.intellij.modules.platform</depends>
+
+    <extensions defaultExtensionNs="com.intellij">
+        <toolWindow id="Ini Viewer" secondary="true" anchor="right"
+                    factoryClass="com.tianhe.iniviewer.ui.IniViewerToolWindowFactory"/>
+
+        <notificationGroup id="com.tianhe.iniviewer.notification.id"
+                           displayType="BALLOON"
+                           key="notification.group.name"/>
+    </extensions>
+
+    <actions>
+        <!-- Add your actions here -->
+    </actions>
+</idea-plugin>
