@@ -9,7 +9,7 @@ import javax.swing.tree.TreeNode
 /**
  * Created by tianhe on 2023/4/9
  */
-class SectionTree(private val rootName: String) {
+class SectionTree(rootName: String) {
     var rootNode: MultiSection? = null
 
     init {
@@ -56,7 +56,8 @@ class SectionTree(private val rootName: String) {
         } else {
             //不冲突，只有一个section
             node.section.let { section ->
-                section.properties.forEach {
+                val properties = getSortedPropertyList(section.properties)
+                properties.forEach {
                     val nextNode = KVTreeNode(it.key, it.value, section)
                     node.add(nextNode)
                     queue.offer(nextNode)
@@ -67,7 +68,8 @@ class SectionTree(private val rootName: String) {
 
     private fun handleSectionTreeNode(node: SectionTreeNode, queue: Queue<TreeNode>) {
         node.section.let { section ->
-            section.properties.forEach {
+            val properties = getSortedPropertyList(section.properties)
+            properties.forEach {
                 val nextNode = KVTreeNode(it.key, it.value, section)
                 node.add(nextNode)
                 queue.offer(nextNode)
@@ -94,6 +96,22 @@ class SectionTree(private val rootName: String) {
             }
         }
 
+    }
+
+
+    private fun getSortedPropertyList(properties: Map<String, Value>): List<Map.Entry<String, Value>> {
+        val list = LinkedList<Map.Entry<String, Value>>()
+        //插入排序
+        properties.forEach { entry ->
+            for (e in list.withIndex()) {
+                if (entry.value.lineNum <= e.value.value.lineNum) {
+                    list.add(e.index, entry)
+                    return@forEach
+                }
+            }
+            list.add(entry)
+        }
+        return list
     }
 
 

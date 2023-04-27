@@ -18,10 +18,10 @@ class Value(val value: String, val lineNum: Int) {
         if (value.contains(Config.VALUE_SEPARATOR)) {
             val ret = value.split(Config.VALUE_SEPARATOR)
             isMultiReference = true
-            ret.forEach {
-                if (isDigit(it)) {
+            for (s in ret) {
+                if (isDigit(s)) {
                     isMultiReference = false
-                    return@forEach
+                    break
                 }
             }
             if (isMultiReference) {
@@ -39,5 +39,20 @@ class Value(val value: String, val lineNum: Int) {
 
     fun isDigit(value: String): Boolean {
         return value.all { Character.isDigit(it) || it == '.' }
+    }
+
+    fun isImage(): Boolean {
+        if (value.isNotEmpty()) {
+            return value.contains(".png") ||
+                    value.contains(".jpg") ||
+                    value.contains(".jpeg") ||
+                    value.contains(".gif") ||
+                    value.contains(".svg")
+        }
+        return false
+    }
+
+    fun getImageName(): String {
+        return value.split(Config.VALUE_SEPARATOR)[0]
     }
 }

@@ -16,4 +16,19 @@ class KVTreeNode(val key: String, val value: Value, override val section: Sectio
         return "$key = $value"
     }
 
+    fun isConflictNode(): Boolean {
+        section.parentSection?.let {
+            return it.containsConflictKey(key)
+        }
+        return false
+    }
+
+    fun isImageFile(): Boolean {
+        return value.isImage()
+    }
+
+
+    fun getImageFile(): String {
+        return value.getImageName()
+    }
 }

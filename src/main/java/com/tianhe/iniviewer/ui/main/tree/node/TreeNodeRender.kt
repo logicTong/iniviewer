@@ -25,6 +25,11 @@ class TreeNodeRender : DefaultTreeCellRenderer() {
     var openIcon0: Icon = AllIcons.Actions.Collapseall
     val closeIcon0 = AllIcons.Actions.PrettyPrint
 
+    val selectTextColor = getTextSelectionColor()
+    val normalTextColor = getTextNonSelectionColor()
+    val conflictSelectTextColor = Color.PINK
+    val conflictNormalTextColor = Color.PINK
+
 //    val leafIcon0 = AllIcons.General.InspectionsOK
 //    var openIcon0:Icon = AllIcons.Actions.Expandall
 //    val closeIcon0 = AllIcons.Json.Object
@@ -50,24 +55,28 @@ class TreeNodeRender : DefaultTreeCellRenderer() {
         row: Int,
         hasFocus: Boolean
     ): Component {
-
-        super.getTreeCellRendererComponent(tree, value, sel, expanded, leaf, row, hasFocus)
         if (value is TreeNode) {
             renderTreeNode(value)
         }
-
+        super.getTreeCellRendererComponent(tree, value, sel, expanded, leaf, row, hasFocus)
         return container
 
     }
 
 
     private fun renderTreeNode(model: TreeNode) {
+        setTextNonSelectionColor(normalTextColor)
+        setTextSelectionColor(selectTextColor)
         if (model is SectionTreeNode) {
             iniFileName.text = "${model.section.iniFileName}    "
         } else if (model is MultiSectionTreeNode) {
             iniFileName.text = "${model.section.iniFileName}    "
-        } else {
+        } else if (model is KVTreeNode) {
             iniFileName.text = ""
+            if (model.isConflictNode()) {
+                setTextNonSelectionColor(conflictNormalTextColor)
+                setTextSelectionColor(conflictSelectTextColor)
+            }
         }
 
     }

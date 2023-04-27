@@ -10,6 +10,7 @@ class Section(info: SectionInfo, private val iniFile: IniFile) {
     val properties = mutableMapOf<String, Value>()
     val name: String
     val lineNum: Int
+    var parentSection: MultiSection? = null
 
     val iniFileName: String
         get() {

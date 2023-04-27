@@ -4,7 +4,24 @@
     <vendor email="1299957228@qq.com">TianHeTong</vendor>
 
     <description>
-        a tool to view ini file better.
+        english description:
+
+        Ini Viewer is a tool for preview data struct of ini file.
+
+        how to use?
+        1、click "manage ini file" button to open manage ini file page, add ini file will load ini file content to memory.
+        2、input the root section node name of your section tree in the top text field, then you can get a section tree table.
+        3、right click on any tree node, you can edit the ini file while tree node represented.
+
+        中文说明：
+
+        Ini Viewer可以帮助你更直观的预览ini文件数据的结构。
+
+        如何使用？
+        1、在ini viewer工具窗口中，单击”manage ini file“按钮，打开ini文件管理页面，添加工程中的ini文件路径，ini viewer会根据路径，读取ini文件的内容到内存中。
+        2、在ini viewer工具窗口中，输入框中输入想要预览的section树的根节点名称，会自动构建一个section的引用树，以便直观的看到section的引用结构。
+        3、在section的引用树上任意节点，右键单击”edit ini file“，可以自动跳转到对应的ini文件，并对应到树节点对应的行，方便直接修改ini文件。
+
     </description>
 
     <!-- please see https://plugins.jetbrains.com/docs/intellij/plugin-compatibility.html

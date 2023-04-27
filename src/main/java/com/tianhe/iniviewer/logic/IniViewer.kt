@@ -3,6 +3,7 @@ package com.tianhe.iniviewer.logic
 import com.intellij.notification.NotificationType
 import com.intellij.openapi.project.Project
 import com.intellij.openapi.wm.ToolWindow
+import com.tianhe.iniviewer.data.ImageDir
 import com.tianhe.iniviewer.data.PathList
 import com.tianhe.iniviewer.data.model.SectionDict
 import com.tianhe.iniviewer.inifile.IniDataLoader
@@ -29,6 +30,7 @@ object IniViewer {
 
     private fun initComponents() {
         PathList.init(project)
+        ImageDir.init(project)
         loadAllIniFile(false)
     }
 

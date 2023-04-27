@@ -10,7 +10,7 @@ object SectionDict {
     const val TAG = "SectionDict"
 
 
-    private val dict = mutableMapOf<String, MultiSection>()
+    val dict = mutableMapOf<String, MultiSection>()
 
 
     @Synchronized
@@ -72,4 +72,6 @@ object SectionDict {
     private fun dumpSize() {
         Log.d(TAG, "dict size =${dict.size}")
     }
+
+
 }

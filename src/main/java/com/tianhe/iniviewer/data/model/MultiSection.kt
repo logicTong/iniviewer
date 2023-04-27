@@ -5,13 +5,36 @@ package com.tianhe.iniviewer.data.model
  */
 class MultiSection(section: Section) {
     val sections = mutableListOf<Section>()
+    private val conflictKeys = mutableSetOf<String>()
 
     init {
         sections.add(section)
+        section.parentSection = this
     }
 
+
     fun addSection(section: Section) {
+        recordConflictKeys(section)
         sections.add(section)
+        section.parentSection = this
+    }
+
+    fun containsConflictKey(key: String): Boolean {
+        return conflictKeys.contains(key)
+    }
+
+    private fun recordConflictKeys(section: Section) {
+        section.properties.forEach {
+            if (conflictKeys.contains(it.key)) {
+                return@forEach
+            }
+            for (e in sections) {
+                if (e.properties.containsKey(it.key)) {
+                    conflictKeys.add(it.key)
+                    return@forEach
+                }
+            }
+        }
     }
 
     override fun toString(): String {
@@ -23,7 +46,7 @@ class MultiSection(section: Section) {
 
     val sectionName: String
         get() {
-            return getSingleSection()?.name?:""
+            return getSingleSection()?.name ?: ""
         }
 
     fun getSingleSection(): Section? {
