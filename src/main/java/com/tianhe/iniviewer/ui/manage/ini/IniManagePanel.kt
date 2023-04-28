@@ -5,7 +5,6 @@ import com.intellij.ide.util.TreeFileChooser
 import com.intellij.ide.util.TreeFileChooserFactory
 import com.intellij.notification.NotificationType
 import com.intellij.openapi.project.Project
-import com.intellij.openapi.ui.TextFieldWithBrowseButton
 import com.intellij.openapi.ui.VerticalFlowLayout
 import com.intellij.openapi.vfs.VfsUtil
 import com.intellij.psi.PsiFile
@@ -36,7 +35,8 @@ class IniManagePanel(val project: Project) : BorderLayoutPanel() {
      * 顶部路径选择
      */
     val inputLabel = JLabel("add ini files by click \"add file\" or \"add directory\" button:")
-    val addPathButton = JButton(AllIcons.Actions.AddFile).apply { toolTipText = "add a ini file" }
+    val addFileButton = JButton(AllIcons.Actions.AddMulticaret).apply { toolTipText = "add a ini file" }
+//    val addFileButton = JButton(AllIcons.Actions.AddFile).apply { toolTipText = "add a ini file" }
     val addDirectoryButton =
         JButton(AllIcons.Actions.NewFolder).apply { toolTipText = "add ini files in directory" }
     val deletePathButton = JButton(AllIcons.Actions.GC).apply { toolTipText = "remove selected ini file" }
@@ -67,13 +67,13 @@ class IniManagePanel(val project: Project) : BorderLayoutPanel() {
         topPanel.run {
             add(inputLabel)
             add(JPanel(FlowLayout(FlowLayout.LEFT)).apply {
-                add(addPathButton)
-                add(addDirectoryButton)
+                add("add_file", addFileButton)
+                add("add_dir", addDirectoryButton)
                 add(deletePathButton)
             })
         }
         addToTop(topPanel)
-        addPathButton.addActionListener {
+        addFileButton.addActionListener {
             showIniFileChooser()?.let { addPath(it) }
         }
         addDirectoryButton.addActionListener {

@@ -1,6 +1,8 @@
-package com.tianhe.iniviewer.ui;
+package com.tianhe.iniviewer.logic;
 
 import com.intellij.openapi.project.Project;
+import com.intellij.openapi.project.ProjectManager;
+import com.intellij.openapi.project.ProjectManagerListener;
 import com.intellij.openapi.wm.ToolWindow;
 import com.intellij.openapi.wm.ToolWindowFactory;
 import com.intellij.ui.content.Content;
@@ -14,13 +16,17 @@ public class IniViewerToolWindowFactory implements ToolWindowFactory {
 
     @Override
     public void createToolWindowContent(@NotNull Project project, @NotNull ToolWindow toolWindow) {
-        IniViewer.INSTANCE.init(project, toolWindow);
+        IniViewer.INSTANCE.init(project);
         ContentFactory contentFactory = ContentFactory.SERVICE.getInstance();
         Content content = contentFactory.createContent(new MainPanel(project), null, false);
         toolWindow.getContentManager().addContent(content);
+        ProjectManager.getInstance().addProjectManagerListener(project, new ProjectManagerListener() {
+            @Override
+            public void projectClosed(@NotNull Project project) {
+                IniViewer.INSTANCE.dispose();
+            }
+        });
     }
-
-
 
 
 }

@@ -2,6 +2,7 @@ package com.tianhe.iniviewer.data
 
 import com.intellij.ide.util.PropertiesComponent
 import com.intellij.openapi.project.Project
+import com.tianhe.iniviewer.logic.Consts
 import com.tianhe.iniviewer.utils.Log
 import java.io.File
 
@@ -11,7 +12,7 @@ import java.io.File
 object ImageDir {
     const val TAG = "ImageDir"
 
-    private const val KEY = "com.tianhe.iniviewer.ImageDir"
+    private val KEY = "${Consts.getProjectKey()}.ImageDir"
     private lateinit var project: Project
 
     var directory: String? = null

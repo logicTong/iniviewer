@@ -18,15 +18,20 @@ object IniViewer {
     const val TAG = "IniViewer"
 
     private lateinit var project: Project
-    private lateinit var toolWindow: ToolWindow
 
 
-    fun init(project: Project, toolWindow: ToolWindow) {
+    fun init(project: Project) {
+        Log.d(TAG, "ini: ")
+        Consts.PROJECT_NAME = project.name
         this.project = project
-        this.toolWindow = toolWindow
         initComponents()
     }
 
+
+    fun dispose(){
+        Log.d(TAG, "dispose: ")
+        SectionDict.clear()
+    }
 
     private fun initComponents() {
         PathList.init(project)

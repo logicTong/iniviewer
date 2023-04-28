@@ -3,6 +3,8 @@
     <name>ini viewer</name>
     <vendor email="1299957228@qq.com">TianHeTong</vendor>
 
+    <idea-version since-build="201" until-build="231.*"/>
+
     <description>
         english description:
 
@@ -30,7 +32,7 @@
 
     <extensions defaultExtensionNs="com.intellij">
         <toolWindow id="Ini Viewer" secondary="true" anchor="right"
-                    factoryClass="com.tianhe.iniviewer.ui.IniViewerToolWindowFactory"/>
+                    factoryClass="com.tianhe.iniviewer.logic.IniViewerToolWindowFactory"/>
 
         <notificationGroup id="com.tianhe.iniviewer.notification.id"
                            displayType="BALLOON"

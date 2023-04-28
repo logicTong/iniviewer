@@ -4,6 +4,7 @@ import com.intellij.icons.AllIcons
 import com.intellij.ui.components.JBLabel
 import com.intellij.util.ui.UIUtil
 import com.intellij.util.ui.components.BorderLayoutPanel
+import com.tianhe.iniviewer.logic.Consts
 import com.tianhe.iniviewer.ui.main.tree.node.MultiSectionTreeNode
 import com.tianhe.iniviewer.ui.main.tree.node.SectionTreeNode
 import com.tianhe.iniviewer.ui.main.tree.node.TreeNode
@@ -23,17 +24,22 @@ class TreeNodeRender : DefaultTreeCellRenderer() {
 
     val leafIcon0 = AllIcons.General.Information
     var openIcon0: Icon = AllIcons.Actions.Collapseall
-    val closeIcon0 = AllIcons.Actions.PrettyPrint
+    val closeIcon0 = getCloseIcon()
 
     val selectTextColor = getTextSelectionColor()
     val normalTextColor = getTextNonSelectionColor()
     val conflictSelectTextColor = Color.PINK
     val conflictNormalTextColor = Color.PINK
 
-//    val leafIcon0 = AllIcons.General.InspectionsOK
-//    var openIcon0:Icon = AllIcons.Actions.Expandall
-//    val closeIcon0 = AllIcons.Json.Object
 
+    private fun getCloseIcon(): Icon? {
+        if (Consts.getIDEAVersion() >= Consts.MAJOR_211) {
+            return AllIcons.Actions.PrettyPrint
+//            return null
+        } else {
+            return AllIcons.Json.Object
+        }
+    }
 
     init {
         setOpenIcon(openIcon0)

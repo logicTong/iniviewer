@@ -14,6 +14,7 @@ import com.intellij.ui.treeStructure.Tree
 import com.intellij.util.ui.components.BorderLayoutPanel
 import com.tianhe.iniviewer.data.ImageDir
 import com.tianhe.iniviewer.data.model.SectionTree
+import com.tianhe.iniviewer.logic.Consts
 import com.tianhe.iniviewer.logic.IniViewer
 import com.tianhe.iniviewer.ui.main.tree.node.*
 import com.tianhe.iniviewer.ui.manage.ini.PathManageDialog
@@ -52,7 +53,7 @@ class MainPanel(val project: Project) : BorderLayoutPanel() {
      */
     val inputPanel = JPanel(VerticalFlowLayout())
     val treeRootLabel = JBLabel("please input the root section: ")
-    val treeRootText = TextFieldWithStoredHistory("RootNode").apply { setHistorySize(20) }
+    val treeRootText = TextFieldWithStoredHistory("${Consts.getProjectKey()}.RootNode").apply { setHistorySize(20) }
 
     val topPanel = JPanel(VerticalFlowLayout())
 
@@ -108,23 +109,8 @@ class MainPanel(val project: Project) : BorderLayoutPanel() {
         Log.d(TAG, "refreshTree: text=$text")
         SectionTree(text).buildTreeModel()?.let {
             tree.model = DefaultTreeModel(it)
-//            treeRootText.addCurrentTextToHistory()
-            addRootNameToHistory()
+            treeRootText.addCurrentTextToHistory()
         }
-    }
-
-    private fun addRootNameToHistory() {
-        val currentInput = treeRootText.text
-        val history = treeRootText.history
-        for (e in history) {
-            if (e.equals(currentInput, true)) {
-                history.remove(e)
-                break
-            }
-        }
-        history.add(0, currentInput)
-        treeRootText.history = history
-        treeRootText.selectedItem = currentInput
     }
 
     private fun initListener() {
@@ -163,6 +149,11 @@ class MainPanel(val project: Project) : BorderLayoutPanel() {
                         tree.selectionPath = selectPath
                         selectNode = selectPath?.lastPathComponent as TreeNode?
                         showMenu(tree, x, y)
+                    } else if (clickCount == 2) {
+                        selectNode?.let {
+                            Navigation(project).navigationToEditor(it.section, it.lineNum)
+                            selectNode = null
+                        }
                     }
                 }
             }

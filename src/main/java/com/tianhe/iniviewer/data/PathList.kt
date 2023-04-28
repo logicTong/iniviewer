@@ -2,6 +2,7 @@ package com.tianhe.iniviewer.data
 
 import com.intellij.ide.util.PropertiesComponent
 import com.intellij.openapi.project.Project
+import com.tianhe.iniviewer.logic.Consts
 import com.tianhe.iniviewer.utils.Log
 import java.lang.StringBuilder
 
@@ -12,7 +13,7 @@ object PathList {
 
     private const val TAG = "PathManager"
     private const val SEPARATOR = ";"
-    private const val KEY = "com.tianhe.iniviewer.IniPathList"
+    private val KEY = "${Consts.getProjectKey()}.IniPathList"
 
     val pathList = arrayListOf<String>()
     private lateinit var project: Project
