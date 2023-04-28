@@ -165,6 +165,12 @@ class MainPanel(val project: Project) : BorderLayoutPanel() {
         }
     }
 
+    private fun isImageNode(): Boolean {
+        if (selectNode is KVTreeNode) {
+            return (selectNode as KVTreeNode).isImageFile()
+        }
+        return false
+    }
 
     fun showMenu(tree: Tree, x: Int, y: Int) {
         JPopupMenu().apply {
@@ -176,7 +182,7 @@ class MainPanel(val project: Project) : BorderLayoutPanel() {
                     }
                 }
             })
-            add(JMenuItem("locate to file").apply {
+            add(JMenuItem("locate to ${if (isImageNode()) "image" else "file"}").apply {
                 addActionListener {
                     selectNode?.let {
                         navigationToFile(it)
