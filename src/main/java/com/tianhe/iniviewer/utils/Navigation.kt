@@ -3,7 +3,9 @@ package com.tianhe.iniviewer.utils
 import com.intellij.openapi.editor.Editor
 import com.intellij.openapi.editor.LogicalPosition
 import com.intellij.openapi.editor.ScrollType
+import com.intellij.openapi.editor.VisualPosition
 import com.intellij.openapi.fileEditor.OpenFileDescriptor
+import com.intellij.openapi.fileEditor.TextEditor
 import com.intellij.openapi.fileEditor.ex.FileEditorManagerEx
 import com.intellij.openapi.project.Project
 import com.intellij.openapi.vfs.VfsUtil
@@ -23,7 +25,7 @@ class Navigation(val project: Project) {
             val editingFile = PsiDocumentManager.getInstance(project).getPsiFile(editor.document)?.virtualFile?.path
             Log.d(TAG, "navigationToFile: editingFile = $editingFile")
             if (section.intFilePath == editingFile) {
-                scrollToLineNum(editor, lineNum)
+                scrollToLineNum(editor, lineNum, true)
                 return
             }
         }
@@ -34,15 +36,25 @@ class Navigation(val project: Project) {
         VfsUtil.findFileByIoFile(File(file), false)?.let { vf ->
             FileEditorManagerEx.getInstanceEx(project).openTextEditor(OpenFileDescriptor(project, vf, 0), true)
                 ?.let { editor ->
-                    scrollToLineNum(editor, lineNum)
+                    scrollToLineNum(editor, lineNum, true)
                 }
         }
     }
 
 
-    private fun scrollToLineNum(editor: Editor, lineNum: Int) {
-        val position = LogicalPosition(lineNum, 0)
-        editor.caretModel.moveToLogicalPosition(position)
+    private fun scrollToLineNum(editor: Editor, lineNum: Int, select: Boolean) {
+        val position = VisualPosition(lineNum, 0)
+        editor.caretModel.moveToVisualPosition(position)
         editor.scrollingModel.scrollToCaret(ScrollType.CENTER)
     }
+
+//    private fun selectLine(editor: Editor, lineNum: Int) {
+//        if (editor is TextEditor) {
+//            val document = editor.document
+//            val startOffset = document.getLineStartOffset(lineNum)
+//            val endOffset = document.getLineEndOffset(lineNum)
+//            editor.selectionModel.setSelection(startOffset, endOffset)
+//        }
+//    }
+
 }

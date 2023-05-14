@@ -11,7 +11,6 @@ class KVTreeNode(val key: String, val value: Value, override val section: Sectio
     override val lineNum: Int
         get() = value.lineNum
 
-
     override fun toString(): String {
         return "$key = $value"
     }

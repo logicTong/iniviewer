@@ -64,4 +64,24 @@ object IniViewer {
             })
         }
     }
+
+
+    fun loadAllIniFile(callback:()->Unit) {
+        if (PathList.pathList.isNotEmpty()) {
+            SectionDict.clear()
+            IniDataLoader.loadAllIniFile(PathList.pathList, success = {
+                SectionDict.addIniFile(it)
+            }, fail = { path, e ->
+                Log.e(TAG, "loadAllInitFile fail, path = $path", e)
+                NotificationUtils.showNotification(
+                    project,
+                    "read ini file fail\n $path",
+                    NotificationType.ERROR
+                )
+            }, allSuccess = {
+                Log.d(TAG, "loadAllInitFile success")
+                callback()
+            })
+        }
+    }
 }

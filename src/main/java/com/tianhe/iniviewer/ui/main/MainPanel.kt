@@ -3,10 +3,14 @@ package com.tianhe.iniviewer.ui.main
 import com.intellij.icons.AllIcons
 import com.intellij.ide.projectView.impl.ProjectViewImpl
 import com.intellij.notification.NotificationType
+import com.intellij.openapi.fileEditor.FileDocumentManager
+import com.intellij.openapi.fileEditor.TextEditor
+import com.intellij.openapi.fileEditor.ex.FileEditorManagerEx
 import com.intellij.openapi.project.Project
 import com.intellij.openapi.ui.DialogWrapper
 import com.intellij.openapi.ui.VerticalFlowLayout
 import com.intellij.openapi.vfs.VfsUtil
+import com.intellij.psi.PsiDocumentManager
 import com.intellij.ui.TextFieldWithStoredHistory
 import com.intellij.ui.components.JBLabel
 import com.intellij.ui.components.JBScrollPane
@@ -107,8 +111,9 @@ class MainPanel(val project: Project) : BorderLayoutPanel() {
 
     private fun refreshTree(text: String) {
         Log.d(TAG, "refreshTree: text=$text")
-        SectionTree(text).buildTreeModel()?.let {
-            tree.model = DefaultTreeModel(it)
+        val treeModel = SectionTree(text).buildTreeModel()
+        tree.model = DefaultTreeModel(treeModel)
+        treeModel?.let {
             treeRootText.addCurrentTextToHistory()
         }
     }
@@ -123,7 +128,10 @@ class MainPanel(val project: Project) : BorderLayoutPanel() {
         })
 
         syncBtn.addActionListener {
-            IniViewer.loadAllIniFile(true)
+            saveEditorsChange()
+            IniViewer.loadAllIniFile{
+                refreshTree(treeRootText.text)
+            }
         }
 
         iniManageBtn.addActionListener {
@@ -162,6 +170,25 @@ class MainPanel(val project: Project) : BorderLayoutPanel() {
         tree.addTreeSelectionListener {
             selectNode = tree.lastSelectedPathComponent as TreeNode?
             Log.d(TAG, "lastNode=$selectNode")
+        }
+    }
+
+    private fun saveEditorsChange(){
+        for (e in FileEditorManagerEx.getInstanceEx(project).allEditors) {
+            if (e.isModified && e.file != null) {
+                if (e.file!!.path.endsWith(".ini")&&e is TextEditor){
+                    Log.d(TAG, "saveEditorsChange: save file=${e.file}")
+                    e.editor.document.let {
+                        FileDocumentManager.getInstance().saveDocument(it)
+                    }
+                }
+            }
+        }
+
+        FileEditorManagerEx.getInstanceEx(project).selectedTextEditor?.let { editor ->
+            editor.document.let {
+                FileDocumentManager.getInstance().saveDocument(it)
+            }
         }
     }
 

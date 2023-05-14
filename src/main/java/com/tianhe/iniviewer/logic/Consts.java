@@ -13,8 +13,8 @@ public class Consts {
     public static final String NOTIFICATION_ID = "com.tianhe.iniviewer.notification.id";
     public static String PROJECT_NAME = "";
 
-    public static final int MAJOR_211=211;
-    public static final int MAJOR_201=201;
+    public static final int MAJOR_211 = 211;
+    public static final int MAJOR_201 = 201;
 
     public static String getProjectKey() {
         String key = PACKAGE_NAME + "." + PROJECT_NAME;
@@ -22,9 +22,9 @@ public class Consts {
         return key;
     }
 
-    public static int getIDEAVersion(){
-        int v= ApplicationInfo.getInstance().getBuild().getBaselineVersion();
-        Log.d(TAG, "getIDEAVersion: v="+v);
+    public static int getIDEAVersion() {
+        int v = ApplicationInfo.getInstance().getBuild().getBaselineVersion();
+        Log.d(TAG, "getIDEAVersion: v=" + v);
         return v;
     }
 
